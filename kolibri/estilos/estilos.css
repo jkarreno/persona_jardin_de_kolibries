@@ -1,0 +1,94 @@
+*, html{
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+body{
+	background-color: #ffffff;
+	/*background: url('https://source.unsplash.com/featured/1920x1080/?mexico') no-repeat;*/
+	/*background: url('../images/background.png') no-repeat;*/
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+input[type="password"]{
+    border: 0px;
+    height: 20px;
+    width: 80%;
+    font-family: Arial;
+    font-size: 20px;
+    color: #0A2240;
+    position: absolute;
+}
+.centrado_logo{
+	width: 500px;
+	margin: auto;
+	position: relative;
+	padding: 0;
+	overflow: hidden;
+	top: 10px;
+}
+	.centrado_logo img{
+		width: 500px;
+	}
+.centrado_index{
+	width: 500px;
+    max-width: 80%;
+	height: 500px;
+    max-height: 80vh;
+	margin: auto;
+	position: absolute;
+	padding: 0;
+	overflow: hidden;
+	top: 60%;
+	left: calc(50% - 250px);
+    transform: translate(0%, -50%);
+    -webkit-transform: translate(0%, -50%);
+	border-radius: 25px;	
+    /*background: rgba(238,235,235,0.7);*/
+}
+.user_pass{
+    position: relative;
+    top: 200px;
+    width: 90%;
+    margin: auto;
+    border: 1px solid #a6a8ab;
+    height: 40px;
+    background-color: #FFF;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    color: #87d87d;
+}
+.boton_ingresar{
+    position: relative;
+    top: 250px;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+.boton {
+    padding:15 30 15 30px;
+    border:0 none;
+    background-color: #e4007d;
+    border-style: solid;
+    border-width: 0;
+    font-family: Arial;
+    font-size: 10pt;
+    color: #FFFFFF;
+    font-weight: normal;
+    border-radius: 3px;
+    box-shadow:         10px 8px 3px 0px #a9a9a9;
+}
+.boton:hover{
+    background-color: #7dd173;
+}
+
+
+/*responsivo*/
+@media screen and (max-width: 600px){
+	.centrado_index{width: 80%; height: 80%; left: calc(50% - 40%);}
+    .centrado_logo img{ width: 80%;	}
+    
+}
