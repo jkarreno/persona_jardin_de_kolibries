@@ -17,11 +17,11 @@ $cadena='<div class="c100 card">
 
                 <div class="c30">
                     <label class="l_form">Año Nacimiento:</label>
-                    <input type="text" id="annon" name="annon" pattern="\d{4}" placeholder="YYYY">
+                    <input type="date" id="annon" name="annon">
                 </div>
                 <div class="c30">
                     <label class="l_form">Año Defuncion:</label>
-                    <input type="text" id="annod" name="annod" pattern="\d{4}" placeholder="YYYY">
+                    <input type="date" id="annod" name="annod">
                 </div>
                 <div class="c30">
                     <label class="l_form">Foto:</label>
