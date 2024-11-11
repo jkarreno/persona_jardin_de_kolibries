@@ -6,18 +6,26 @@
 	box-sizing: border-box;
 }
 body{
+    padding-top: 100px;
 	background-color: #ffffff;
 }
 html, body {
     height: 100%;
     margin: 0;
 }
-header, section, footer{
+header{
+    position: absolute;
+    top: 0;
     width: 100%;
-    padding: 0 10%;
+    background-color: #fff;
 }
 header div{
     width: 50%;
+}
+section, footer{
+    width: 100%;
+    padding: 0 10%;
+    position: relative;
 }
 section{
     padding-top: 100px;
@@ -55,6 +63,7 @@ p{
     display: flex; 
     align-items: center;
     align-content: center;
+    justify-content: center;
     flex-wrap: wrap;
 }
 .h2center{
@@ -80,11 +89,29 @@ p{
 .qr img{
     width: 200px;
 }
+#remembranza{
+    width: 100%;
+    height: 100vh;
+}
+    #remembranza video{
+        position: absolute; 
+        top: 50%; 
+        left: 50%;
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        transform: translate(-50%, -50%); 
+        z-index: -1;
+    }
 #nombre {
     background-image: url('https://jardindekolibries.com/wp-content/uploads/2021/08/mb-03-scaled.jpg');
     background-position: center center;
     background-size: cover;
 }
+    #nombre div img{
+        width: 80%;
+        height: auto;
+    }
 #recuerdos {
     background-image: url('https://jardindekolibries.com/wp-content/uploads/2021/08/PATRON_07.jpg');
     padding-top: 0;
@@ -115,6 +142,13 @@ p{
             padding: 10px;
             font-style: oblique;
             color: #7A7A7A;
+        }
+        .recuerdos div p{
+            font-family: 'Akrobat Bold', sans-serif;
+            color: #7A7A7A;
+            display: block;
+            width: 100%;
+            text-align: justify;
         }
 .frase{
     background-image: url('https://jardindekolibries.com/wp-content/uploads/2021/08/mb-02-scaled.jpg');
@@ -372,3 +406,25 @@ footer{
 		background-color: #39657d;
 		color: #ffffff;
 	}
+
+/*responsivos*/
+@media only screen and (max-width:760px){
+    #remembranza{
+        height: 50vh;
+    }
+    .c50{
+        width: 100%;
+    }
+    .nombre div img{
+        width: 100%;
+    }
+    .recuerdos div {
+        width: 100%;
+    }
+}
+@media only screen and (max-width:450px){
+    .mensaje {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

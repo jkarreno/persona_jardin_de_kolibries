@@ -30,7 +30,7 @@ $ResP=mysqli_fetch_array(mysqli_query($conn, "SELECT Nombre FROM personas WHERE 
             <p><i class="fa-regular fa-envelope"></i> Mensaje </p>
         </div>
 
-        <div class="boton">
+        <div class="boton" onclick="recuerdo('<?php echo $idpersona;?>')">
             <p><i class="fa-solid fa-image"></i> Recuerdo</p>
         </div>
     </div>
@@ -41,6 +41,15 @@ $ResP=mysqli_fetch_array(mysqli_query($conn, "SELECT Nombre FROM personas WHERE 
             $.ajax({
                 type: 'POST',
                 url : 'mensaje.php',
+                data: 'idpersona=' + idpersona
+            }).done (function ( info ){
+                $('#contenedor').html(info);
+            });
+        }
+        function recuerdo(idpersona){
+            $.ajax({
+                type: 'POST',
+                url : 'recuerdo.php',
                 data: 'idpersona=' + idpersona
             }).done (function ( info ){
                 $('#contenedor').html(info);

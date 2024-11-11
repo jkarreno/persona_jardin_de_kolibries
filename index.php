@@ -53,6 +53,11 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
         </div>
     </header>
 
+    <section id="remembranza">
+        <video autoplay muted loop playsinline controlslist="nodownload" id="mivideo" width="100%" controls="" autoplay="autoplay" src="videos/<?php echo $ResP["Id"];?>_remembranza.mp4" type="video/mp4">
+        </video>
+    </section>
+
     <section id="nombre" class="flex">
         <div class="c50">
             <div class="qr">
@@ -62,8 +67,8 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
             <h2 style="display: block; text-align: center; color: #545a62;"><?php echo utf8_encode($ResP["Nombre"]);?></h2>
             <h2 style="display: block; text-align: center; color: #e4007d;"><?php echo $ResP["Nacimiento"].'-'.$ResP["Deceso"];?></h2>
         </div>
-        <div class="c50">
-            <img width="1024" height="595" src="nido/personas/fotos/<?php echo $ResP["IdNombre"];?>.jpg" />	
+        <div class="c50 flex">
+            <img src="nido/personas/fotos/<?php echo $ResP["IdNombre"];?>.jpg" />	
         </div>
     </section>
 
@@ -86,42 +91,16 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
         <div class="c100 flex">
             <h2 class="titulo">Recuerdos</h2>
             <div class="recuerdos">
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
-                <div>
-                    <img loading="lazy" decoding="async" width="768" height="432" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-06-768x432.jpg"/>
-                    <span>Fin de semana en la playa</span>
-                </div>
+                <?php
+                    $ResRecuerdos = mysqli_query($conn, "SELECT * FROM recuerdos WHERE IdPersona='".$ResP["Id"]."' ORDER BY Id ASC");
+                    while($RResR=mysqli_fetch_array($ResRecuerdos))
+                    {
+                        echo ' <div>
+                                <img loading="lazy" decoding="async" width="768" height="432" src="mensaje/files/'.$RResR["Foto"].'"/>
+                                <span>'.$RResR["Descripcion"].'</span>
+                            </div>';
+                    }
+                ?>
             </div>
         </div>
     </section>
@@ -151,81 +130,9 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
                     </div>';
             }
         ?>
-        <div class="mensaje">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <div>
-                <div class="persona">
-                    <img src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-gente-03.jpg" />
-                </div>
-                <div class="nombrepersona">
-                    <h2>Javier Domínguez</h2>
-                    <span>Compañero de preparatoria</span>
-                </div>
-            </div>
-        </div>
-        <div class="mensaje">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <div>
-                <div class="persona">
-                    <img src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-gente-03.jpg" />
-                </div>
-                <div class="nombrepersona">
-                    <h2>Javier Domínguez</h2>
-                    <span>Compañero de preparatoria</span>
-                </div>
-            </div>
-        </div>
-        <div class="mensaje">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <div>
-                <div class="persona">
-                    <img width="500" height="500" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-gente-03.jpg" />
-                </div>
-                <div class="nombrepersona">
-                    <h2>Javier Domínguez</h2>
-                    <span>Compañero de preparatoria</span>
-                </div>
-            </div>
-        </div>
-        <div class="mensaje">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <div>
-                <div class="persona">
-                    <img width="500" height="500" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-gente-03.jpg" />
-                </div>
-                <div class="nombrepersona">
-                    <h2>Javier Domínguez</h2>
-                    <span>Compañero de preparatoria</span>
-                </div>
-            </div>
-        </div>
-        <div class="mensaje">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <div>
-                <div class="persona">
-                    <img width="500" height="500" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-gente-03.jpg" />
-                </div>
-                <div class="nombrepersona">
-                    <h2>Javier Domínguez</h2>
-                    <span>Compañero de preparatoria</span>
-                </div>
-            </div>
-        </div>
-        <div class="mensaje">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-            <div>
-                <div class="persona">
-                    <img width="500" height="500" src="https://jardindekolibries.com/wp-content/uploads/2021/08/mb-gente-03.jpg" />
-                </div>
-                <div class="nombrepersona">
-                    <h2>Javier Domínguez</h2>
-                    <span>Compañero de preparatoria</span>
-                </div>
-            </div>
-        </div>
     </section>
 
-    <section>
+    <!--<section>
         <h2 class="titulo">Videos</h2>
         <div class="video">
             <div class="vid">
@@ -254,7 +161,7 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
                 <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <section class="memorial">
         <div>
