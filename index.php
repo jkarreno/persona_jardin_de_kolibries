@@ -65,7 +65,7 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
                 <a href="#" onclick="abrirmodal()"><img src="temp/<?php echo $ResP["Id"].'.png';?>"></a>
             </div>
             <h2 style="display: block; text-align: center; color: #545a62;"><?php echo utf8_encode($ResP["Nombre"]);?></h2>
-            <h2 style="display: block; text-align: center; color: #e4007d;"><?php echo $ResP["Nacimiento"].'-'.$ResP["Deceso"];?></h2>
+            <h2 style="display: block; text-align: center; color: #e4007d; font-size: 25px;"><?php echo fecha($ResP["Nacimiento"]).' a '.fecha($ResP["Deceso"]);?></h2>
         </div>
         <div class="c50 flex">
             <img src="nido/personas/fotos/<?php echo $ResP["IdNombre"];?>.jpg" />	
@@ -217,3 +217,27 @@ window.onclick = function(event) {
 	}
 }
 </script>
+<?php
+function fecha($fecha)
+{
+	switch($fecha[5].$fecha[6])
+	{
+		case '01'; $mes='Enero'; break;
+		case '02'; $mes='Febrero'; break;
+		case '03'; $mes='Marzo'; break;
+		case '04'; $mes='Abril'; break;
+		case '05'; $mes='Mayo'; break;
+		case '06'; $mes='Junio'; break;
+		case '07'; $mes='Julio'; break;
+		case '08'; $mes='Agosto'; break;
+		case '09'; $mes='Septiembre'; break;
+		case '10'; $mes='Octubre'; break;
+		case '11'; $mes='Noviembre'; break;
+		case '12'; $mes='Diciembre'; break;
+	}
+	
+	$fechanew=$fecha[8].$fecha[9].' - '.$mes.' - '.$fecha[0].$fecha[1].$fecha[2].$fecha[3];
+	
+	return $fechanew;
+}
+?>

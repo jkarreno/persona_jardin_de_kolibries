@@ -9,10 +9,11 @@ $mensaje='';
 
 if(isset($_POST["hacer"]))
 {
-    $nombrepersona=str_replace(' ', '-', $_POST["nombre"]);
     //agregar persona
     if($_POST["hacer"]=='guardarpersona')
     {
+        $nombrepersona=str_replace(' ', '-', $_POST["nombre"]);
+
         //carga el archivo foto
         if($_FILES['fotopersona']!='')
         {
@@ -98,6 +99,41 @@ if(isset($_POST["hacer"]))
             $mensaje=$copyfile;
         }
     }
+    if($_POST["hacer"]=='guardaremembranza')
+    {
+        $ResPersona=mysqli_fetch_array(mysqli_query($conn, "SELECT Nombre FROM personas WHERE Id='".$_POST["idpersona"]."' LIMIT 1"));
+        //carga el video remembranza
+        if($_FILES['videoremem']!='')
+        {
+            $nombre_archivo_rm =$_FILES['videoremem']['name']; 
+
+            $ext_rm=explode('.', $nombre_archivo_rm);
+
+            if (is_uploaded_file($_FILES['videoremem']['tmp_name']))
+            { 
+                if(copy($_FILES['videoremem']['tmp_name'], 'videos/'. $_POST["idpersona"] . '_remembranza.'.$ext_rm[1]))
+                {
+                    $copyfile=1;
+                }
+                else
+                {
+                    $copyfile=2;
+                }
+            }
+            else
+            {
+                $copyfile=3;
+            }
+        }
+
+        if($copyfile==1)
+        {
+            $mensaje='<div class="mesaje" id="mesaje"><i class="fas fa-thumbs-up"></i> Se agrego la remembranza de '.$ResPersona["Nombre"].'</div>'; 
+        }
+        else{
+            $mensaje='<div class="mesaje" id="mesaje"><i class="fa-solid fa-triangle-exclamation"></i> ocurrio un error, no se pudo cargar el archivo, intente nuevamente</div>'; 
+        }
+    }
 }
 
 $ResPersonas = mysqli_query($conn, "SELECT * FROM personas ORDER BY Id DESC");
@@ -115,6 +151,11 @@ $cadena=$mensaje.'<div class="c100 card" id="tabla_personas">
                             <th class="tleads">Sexo</th>
                             <th class="tleads">Agente</th>
                             <th class="tleads">Plan</th>
+                            <th class="tleads">Remembranza</th>
+                            <th class="tleads">Foto</th>
+                            <th class="tleads">Memorial</th>
+                            <th class="tleads">Editar</th>
+                            <th class="tleads">Borrar</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -132,6 +173,11 @@ while($RResP = mysqli_fetch_array($ResPersonas))
                             <td>'.$sexo.'</td>
                             <td>'.$ResA["Nombre"].'</td>
                             <td>'.$ResP["Paquete"].'</td>
+                            <td align="center"><a href="#" onclick="remembranza(\''.$ResP["Id"].'\')"><i class="fa-solid fa-photo-film"></i></a></td>
+                            <td align="center"><a href="#" onclick=""><i class="fa-regular fa-image"></i></a></td>
+                            <td align="center"><a href="#" onclick=""><i class="fa-solid fa-film"></i></a></td>
+                            <td align="center"><a href="#" onclick=""><i class="fa-solid fa-user-pen"></i></a></td>
+                            <td align="center"><a href="#" onclick=""><i class="fa-solid fa-trash-can"></i></a></td>
                         </tr>';
 }
 $cadena.='          </tbody>
@@ -177,6 +223,17 @@ function nueva_persona(){
     $.ajax({
 				type: 'POST',
 				url : 'personas/nueva_persona.php'
+	}).done (function ( info ){
+		$('#modal-body').html(info);
+	});
+}
+
+function remembranza(idpersona){
+    limpiar();
+    abrirmodal();
+    $.ajax({
+				type: 'POST',
+				url : 'personas/remembranza.php'
 	}).done (function ( info ){
 		$('#modal-body').html(info);
 	});
