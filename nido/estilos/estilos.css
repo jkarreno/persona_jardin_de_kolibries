@@ -14,9 +14,6 @@ i{
     box-shadow: -1px -1px 5px 0px #f1f1f1, 1px 1px 5px 0px #cccccc;
     padding: 10px 20px;
     margin: 0 20px 20px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: baseline;
 }
     .card h2 {
         font-size: 20px;
@@ -104,9 +101,6 @@ input[type="number"], input[type="text"], input[type="date"], input[type="month"
     background: #c9c9c9;
     padding-left: 10px;
     border-radius: 5px;
-}
-input[type="text"]{
-    text-transform:uppercase;
 }
 input[type="button"], input[type="submit"] {
     width: 100%;
@@ -848,3 +842,10 @@ table {
     height: 100px;
     overflow:auto;
 }
+
+/*
+Created with human intelligence by @jkarreno 2024 - 2025
+May the force be with you
+move your stars
+always ready
+*/

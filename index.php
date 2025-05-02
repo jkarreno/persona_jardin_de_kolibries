@@ -1,6 +1,8 @@
 <?php
 include("nido/conexion.php");
 
+
+
 include ("phpqrcode/qrlib.php"); 
 
 //set it to writable location, a place for temp generated PNG files
@@ -64,7 +66,7 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
                 <!--codigo qr -->
                 <a href="#" onclick="abrirmodal()"><img src="temp/<?php echo $ResP["Id"].'.png';?>"></a>
             </div>
-            <h2 style="display: block; text-align: center; color: #545a62;"><?php echo utf8_encode($ResP["Nombre"]);?></h2>
+            <h2 style="display: block; text-align: center; color: #545a62;"><?php echo $ResP["Nombre"];?></h2>
             <h2 style="display: block; text-align: center; color: #e4007d; font-size: 25px;"><?php echo fecha($ResP["Nacimiento"]).' a '.fecha($ResP["Deceso"]);?></h2>
         </div>
         <div class="c50 flex">
@@ -75,15 +77,22 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
     <section id="recuerdos" class="flex">
         <div class="c100 flex" style="background: #ffffff; padding-top: 100px;">
             <div class="c50" style="padding: 20px;">
-                <h2 style="color: #e4007d;"><?php echo utf8_encode($ResP["Titulo1"]);?></h2>
-                <h2 style="color: #545a62;"><?php echo utf8_encode($ResP["Titulo2"]);?></h2>
+                <h2 style="color: #e4007d;"><?php echo $ResP["Titulo1"];?></h2>
+                <h2 style="color: #545a62;"><?php echo $ResP["Titulo2"];?></h2>
                 <img decoding="async" width="1024" height="576" src="nido/personas/imagenes/<?php echo $ResP["IdNombre"];?>.jpg" />
-                <h2 style="color: #545a62;"><?php echo utf8_encode($ResP["TituloFrase"]);?></h2>
-                <p style="color: #7A7A7A"><?php echo utf8_encode($ResP["Frase"]);?></p>
-                <h2 class="h2center" style="color: #5A595F"><?php echo utf8_encode($ResP["AutorFrase"]);?></h2>
+                <h2 style="color: #545a62;"><?php echo $ResP["TituloFrase"];?></h2>
+                <p style="color: #7A7A7A"><?php echo $ResP["Frase"];?></p>
+                <h2 class="h2center" style="color: #5A595F"><?php echo $ResP["AutorFrase"];?></h2>
             </div>
             <div class="c50" style="padding: 20px; border-top: 1px solid #e4007d;">
-                <?php echo utf8_encode($ResP["Biografia"]);?>
+                <?php 
+                    $ResBio = mysqli_query($conn, "SELECT * FROM biografia WHERE IdPersona='".$ResP["Id"]."' ORDER BY Orden ASC");
+                    while($RResB=mysqli_fetch_array($ResBio))
+                    {
+                        echo '<p>'.$RResB["Parrafo"].'</p>';
+ 
+                    }
+                ?>
             </div>
         </div>
     </section>
@@ -106,8 +115,8 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
     </section>
 
     <section class="frase flex">
-            <p><?php echo utf8_encode($ResP["Frase2"]);?></p>
-            <span><?php echo utf8_encode($ResP["Autor2"]);?></span>
+            <p><?php echo $ResP["Frase2"];?></p>
+            <span><?php echo $ResP["Autor2"];?></span>
     </section>
 
     <section class="mensajes">
@@ -116,11 +125,12 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
             $ResMensajes = mysqli_query($conn, "SELECT * FROM mensajes WHERE IdPersona = '".$ResP["Id"]."' ORDER BY Id ASC");
             while($RResM = mysqli_fetch_array($ResMensajes))
             {
+                $imagen = ($RResM["Foto"] == '' OR $RResM["Foto"] == NULL) ? 'kolibri.jpg' : $RResM["Foto"];
                 echo '<div class="mensaje">
                         <p>'.$RResM["Mensaje"].'</p>
                         <div>
                             <div class="persona">
-                                <img src="https://persona.jardindekolibries.com/mensaje/files/'.$RResM["Foto"].'" />
+                                <img src="https://persona.jardindekolibries.com/mensaje/files/'.$imagen.'" />
                             </div>
                             <div class="nombrepersona">
                                 <h2>'.$RResM["Nombre"].'</h2>
@@ -240,4 +250,11 @@ function fecha($fecha)
 	
 	return $fechanew;
 }
+?>
+
+<?php
+//Created with human intelligence by @jkarreno 2024 - 2025
+//May the force be with you
+//move your stars
+//always ready
 ?>
