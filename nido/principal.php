@@ -20,6 +20,7 @@ include ("conexion.php");
 
 include ("funciones.php");
 ?>
+<!DOCTYPE html>
 <html lang="es-mx">
 <head>
 	<meta charset="UTF-8" />
@@ -51,6 +52,8 @@ include ("funciones.php");
 	<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 
 	<script src="js/codigo.js"></script>
+
+	<script src="https://cdn.tiny.cloud/1/l6e39aqd5rrm4renrhohtiv0mrx4lycqmd65juopih57lky6/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body onload="ini()" onkeypress="parar()" onclick="parar()">
 
@@ -204,3 +207,10 @@ var bloqueo;
     bloqueo = setTimeout('location="logout.php"', 3120000);
   }
 </script>
+
+<?php
+//Created with human intelligence by @jkarreno 2024 - 2025
+//May the force be with you
+//move your stars
+//always ready
+?>

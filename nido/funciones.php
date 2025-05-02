@@ -501,4 +501,20 @@ function obtenerPorcentaje($cantidad, $total) {
    $porcentaje = round($porcentaje, 2);  // Quitar los decimales
    return $porcentaje;
 }
+
+function normalizar_nombre($texto) {
+   $originales = ['Á','É','Í','Ó','Ú','á','é','í','ó','ú','Ñ','ñ'];
+   $reemplazos = ['A','E','I','O','U','a','e','i','o','u','N','n'];
+   $texto = str_replace($originales, $reemplazos, $texto);
+   $texto = preg_replace('/[^A-Za-z0-9 ]/', '', $texto); // quita caracteres no deseados
+   $texto = str_replace(' ', '-', $texto);
+   return $texto;
+}
+?>
+
+<?php
+//Created with human intelligence by @jkarreno 2024 - 2025
+//May the force be with you
+//move your stars
+//always ready
 ?>

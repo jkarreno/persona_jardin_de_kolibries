@@ -54,11 +54,6 @@ $cadena='<div class="c100 card">
                     <input type="text" id="autor" name="autor">
                 </div>
 
-                <div class="c100">
-                    <label class="l_form">Biografia:</label>
-                    <textarea name="biografia" id="biografia"></textarea>
-                </div>
-
                 <div class="c30">
                     <label class="l_form">Frase:</label>
                     <input type="text" id="frase2" name="frase2">
@@ -66,10 +61,6 @@ $cadena='<div class="c100 card">
                 <div class="c30">
                     <label class="l_form">Autor:</label>
                     <input type="text" id="autor2" name="autor2">
-                </div>
-                <div class="c30">
-                    <label class="l_form">Imagen frase:</label>
-                    <input type="file" id="imagenfrase" name="imagenfrase">
                 </div>
 
                 <div class="c30">
@@ -109,10 +100,11 @@ $("#faddpersona").on("submit", function(e){
 		$("#contenido").html(echo);
 	});
 });
+
 </script>
 
 <?php
-//Created with human intelligence by @jkarreno 2024
+//Created with human intelligence by @jkarreno 2024 - 2025
 //May the force be with you
 //move your stars
 //always ready
