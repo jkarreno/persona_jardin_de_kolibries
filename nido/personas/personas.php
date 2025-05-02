@@ -13,10 +13,12 @@ if(isset($_POST["hacer"]))
     //agregar persona
     if($_POST["hacer"]=='guardarpersona')
     {
-        $nombrepersona=str_replace(' ', '-', iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $_POST["nombre"]));
+        $nombrepersona=normalizar_nombre($_POST["nombre"]);
+
+        $copyfile=1;
 
         //carga el archivo foto
-        if($_FILES['fotopersona']!='')
+        if($_FILES['fotopersona']['name']!='')
         {
             $nombre_archivo_fp = $_FILES['fotopersona']['name']; 
 
@@ -39,7 +41,7 @@ if(isset($_POST["hacer"]))
             }
         }
         //carga el archivo imagen
-        if($_FILES['imagenpersona']!='')
+        if($_FILES['imagenpersona']['name']!='')
         {
             $nombre_archivo_ip = $_FILES['imagenpersona']['name']; 
 
@@ -75,12 +77,12 @@ if(isset($_POST["hacer"]))
             $autor2       = mysqli_real_escape_string($conn, $_POST["autor2"]);
 
             mysqli_query($conn, "INSERT INTO personas (Nombre, IdNombre, Sexo, Nacimiento, Deceso, Titulo1, Titulo2, TituloFrase, Frase, AutorFrase, Frase2, Autor2, Paquete, Agente)
-                                                VALUES ('".utf8_decode($_POST["nombre"])."', '".utf8_decode($nombrepersona)."', '".$_POST["sexo"]."', '".$_POST["annon"]."', '".$_POST["annod"]."', 
-                                                        '".utf8_decode($_POST["titulo1"])."', '".utf8_decode($_POST["titulo2"])."', '".utf8_decode($_POST["titulofrase"])."', '".utf8_decode($_POST["frase"])."', 
-                                                        '".utf8_decode($_POST["autor"])."', '".utf8_decode($_POST["frase2"])."', '".utf8_decode($_POST["autor2"])."', 
-                                                        '".$_POST["paquete"]."', '".$_SESSION["Id"]."')");
+                                                VALUES ('".$_POST["nombre"]."', '".$nombrepersona."', '".$_POST["sexo"]."', '".$_POST["annon"]."', '".$_POST["annod"]."', 
+                                                        '".$_POST["titulo1"]."', '".$_POST["titulo2"]."', '".$_POST["titulofrase"]."', '".$_POST["frase"]."', 
+                                                        '".$_POST["autor"]."', '".$_POST["frase2"]."', '".$_POST["autor2"]."', 
+                                                        '".$_POST["paquete"]."', '".$_SESSION["Id"]."')") or die(mysqli_error($conn));
 
-            $mensaje='<div class="mesaje" id="mesaje"><i class="fas fa-thumbs-up"></i> Se agrego a '.$_POST["nombre"].' a la base de datos</div>'; 
+            $mensaje=$copyfile.'<div class="mesaje" id="mesaje"><i class="fas fa-thumbs-up"></i> Se agrego a '.$_POST["nombre"].' a la base de datos</div>'; 
         }
         else{
             $mensaje=$copyfile;

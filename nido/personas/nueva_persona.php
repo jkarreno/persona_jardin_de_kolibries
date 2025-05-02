@@ -21,7 +21,7 @@ $cadena='<div class="c100 card">
                 </div>
                 <div class="c30">
                     <label class="l_form">Año Defuncion:</label>
-                    <input type="date" id="annod" name="annod">
+                    <input type="date" id="annod" name="annod" value="'.date("Y-m-d").'">
                 </div>
                 <div class="c30">
                     <label class="l_form">Foto:</label>
