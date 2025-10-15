@@ -24,7 +24,7 @@ $ResP=mysqli_fetch_array(mysqli_query($conn, "SELECT Nombre FROM personas WHERE 
         <a href="https://jardindekolibries.com/"><img src="https://jardindekolibries.com/wp-content/uploads/2021/08/logo-jardinkolibries-02.jpg" /></a>
     </header>
     <div class="contenedor" id="contenedor">
-        <h2>Envia un mensaje a la familia de <?php echo utf8_encode($ResP["Nombre"]);?> y demuestrales tu cariño con el</h2>
+        <h2>Envia un mensaje a la familia de <?php echo $ResP["Nombre"];?> y demuestrales tu cariño con el</h2>
 
         <div class="boton" onclick="mensaje('<?php echo $idpersona;?>')">
             <p><i class="fa-regular fa-envelope"></i> Mensaje </p>

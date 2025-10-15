@@ -24,7 +24,7 @@ if (mysqli_num_rows($rs)!=0){
 //    $usuario = $username;
 
     //bitacora
-    mysqli_query($conn, "INSERT INTO bitacora (FechaHora, IdUser, Hizo) VALUES ('".time()."', '".$_SESSION["Id"]."', '1')");
+    //mysqli_query($conn, "INSERT INTO bitacora (FechaHora, IdUser, Hizo) VALUES ('".time()."', '".$_SESSION["Id"]."', '1')");
 	
     header ("Location: principal.php"); 
 	
