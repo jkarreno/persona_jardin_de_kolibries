@@ -29,7 +29,7 @@ echo $cadena;
 ?>
 <script>
 //funciones input file
-$(document).on('change','input[type="file"]',function(){
+$(document).on('change','#videoremem',function(){
 	// this.files[0].size recupera el tamaño del archivo
 	// alert(this.files[0].size);
 	

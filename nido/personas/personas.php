@@ -232,7 +232,6 @@ $cadena=$mensaje.'<div class="c100 card" id="tabla_personas">
                             <th class="tleads">Plan</th>
                             <th class="tleads">Remembranza</th>
                             <th class="tleads">Biografia</th>
-                            <th class="tleads">Foto</th>
                             <th class="tleads">Memorial</th>
                             <th class="tleads">Editar</th>
                             <th class="tleads">Codigo QR</th>
@@ -256,10 +255,9 @@ while($RResP = mysqli_fetch_array($ResPersonas))
                             <td>'.$ResP["Paquete"].'</td>
                             <td align="center"><a href="#" onclick="remembranza(\''.$RResP["Id"].'\')"><i class="fa-solid fa-photo-film"></i></a></td>
                             <td align="center"><a href="#" onclick="biografia(\''.$RResP["Id"].'\')"><i class="fa-solid fa-book"></i></a></td>
-                            <td align="center"><a href="#" onclick=""><i class="fa-regular fa-image"></i></a></td>
                             <td align="center"><a href="#" onclick=""><i class="fa-solid fa-film"></i></a></td>
                             <td align="center"><a href="#" onclick="editar_persona(\''.$RResP["Id"].'\')"><i class="fa-solid fa-user-pen"></i></a></td>
-                            <td align="center"><a href="#" onclick=""><i class="fa-solid fa-qrcode"></i></a></td>
+                            <td align="center"><a href="#" onclick="codigo_qr(\''.$RResP["Id"].'\')"><i class="fa-solid fa-qrcode"></i></a></td>
                             <td align="center"><a href="#" onclick=""><i class="fa-solid fa-trash-can"></i></a></td>
                         </tr>';
 }
@@ -334,12 +332,24 @@ function editar_persona(idpersona){
     });
 }
 
-function  biografia (idpersona){
+function biografia (idpersona){
     limpiar();
     abrirmodal();
     $.ajax({
                 type: 'POST',
                 url : 'personas/biografia.php',
+                data: 'idpersona=' + idpersona
+    }).done (function ( info ){
+        $('#modal-body').html(info);
+    });
+}
+
+function codigo_qr (idpersona){
+    limpiar();
+    abrirmodal();
+    $.ajax({
+                type: 'POST',
+                url : 'personas/img_qrcode/codigo_qr.php',
                 data: 'idpersona=' + idpersona
     }).done (function ( info ){
         $('#modal-body').html(info);
