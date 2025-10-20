@@ -235,6 +235,7 @@ $cadena=$mensaje.'<div class="c100 card" id="tabla_personas">
                             <th class="tleads">Memorial</th>
                             <th class="tleads">Editar</th>
                             <th class="tleads">Codigo QR</th>
+                            <th class="tleads">Link</th>
                             <th class="tleads">Borrar</th>
                         </tr>
                     </thead>
@@ -258,6 +259,7 @@ while($RResP = mysqli_fetch_array($ResPersonas))
                             <td align="center"><a href="#" onclick=""><i class="fa-solid fa-film"></i></a></td>
                             <td align="center"><a href="#" onclick="editar_persona(\''.$RResP["Id"].'\')"><i class="fa-solid fa-user-pen"></i></a></td>
                             <td align="center"><a href="#" onclick="codigo_qr(\''.$RResP["Id"].'\')"><i class="fa-solid fa-qrcode"></i></a></td>
+                            <td align="center"><a href="https://persona.jardindekolibries.com/'.$RResP["IdNombre"].'" target="_blank"><i class="fa-solid fa-link"></i></a></td>
                             <td align="center"><a href="#" onclick=""><i class="fa-solid fa-trash-can"></i></a></td>
                         </tr>';
 }

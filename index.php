@@ -45,6 +45,8 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
     <link href="nido/fontawesome64/css/fontawesome.css" rel="stylesheet">
   	<link href="nido/fontawesome64/css/brands.css" rel="stylesheet">
   	<link href="nido/fontawesome64/css/solid.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <header class="flex">
@@ -56,7 +58,7 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
     </header>
 
     <section id="remembranza">
-        <video autoplay muted loop playsinline controlslist="nodownload" id="mivideo" width="100%" controls="" autoplay="autoplay" src="videos/<?php echo $ResP["Id"];?>_remembranza.mp4" type="video/mp4">
+        <video autoplay muted loop playsinline controlslist="nodownload" id="mivideo" width="100%" controls autoplay="autoplay" src="videos/<?php echo $ResP["Id"];?>_remembranza.mp4" type="video/mp4">
         </video>
     </section>
 
@@ -174,7 +176,7 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
     </section>-->
 
     <section class="memorial">
-        <div>
+        <div onclick="memorial('<?php echo $ResP["Id"];?>');">
             <img loading="lazy" decoding="async" width="150" height="150" src="https://jardindekolibries.com/wp-content/uploads/2021/09/icono-jardines-memo3-blanco-150x150.png" />
             <h2>VIDEO MEMORIAL</h2>
             <hr>
@@ -188,7 +190,7 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
 
     <footer>
         <div>
-            Jardín de Kolibríes Copyright 2024
+            Jardín de Kolibríes Copyright 2025 &#169;​ - Todos los derechos reservados.
         </div>
     </footer>
 
@@ -226,6 +228,38 @@ window.onclick = function(event) {
 		modal.style.display = "none";
 	}
 }
+
+function memorial(idpersona){
+    limpiar();
+    abrirmodal();
+
+    $.ajax({
+				type: 'POST',
+				url : 'video_memorial.php',
+                data: 'idpersona=' + idpersona
+	}).done (function ( info ){
+		$('#modal-body').html(info);
+	});
+}
+
+//detecta la orientación del video
+document.addEventListener('DOMContentLoaded', function() {
+  const video = document.getElementById('mivideo');
+
+  video.addEventListener('loadedmetadata', function() {
+    const { videoWidth, videoHeight } = video;
+
+    if (videoHeight > videoWidth) {
+      // Es video vertical
+      video.style.objectFit = 'contain';  // se ajusta completo
+      video.style.height = '100vh';       // altura total de la pantalla
+    } else {
+      // Es video horizontal
+      video.style.objectFit = 'cover';
+      video.style.height = 'auto';
+    }
+  });
+});
 </script>
 <?php
 function fecha($fecha)
