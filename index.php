@@ -57,10 +57,16 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
         </div>
     </header>
 
+    <?php if(file_exists('videos/'.$ResP["Id"].'_remembranza.mp4'))
+        {
+    ?>
     <section id="remembranza">
         <video autoplay muted loop playsinline controlslist="nodownload" id="mivideo" width="100%" controls autoplay="autoplay" src="videos/<?php echo $ResP["Id"];?>_remembranza.mp4" type="video/mp4">
         </video>
     </section>
+    <?php
+        }  
+    ?>
 
     <section id="nombre" class="flex">
         <div class="c50">
@@ -68,8 +74,8 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
                 <!--codigo qr -->
                 <a href="#" onclick="abrirmodal()"><img src="temp/<?php echo $ResP["Id"].'.png';?>"></a>
             </div>
-            <h2 style="display: block; text-align: center; color: #545a62;"><?php echo $ResP["Nombre"];?></h2>
-            <h2 style="display: block; text-align: center; color: #e4007d; font-size: 25px;"><?php echo fecha($ResP["Nacimiento"]).' a '.fecha($ResP["Deceso"]);?></h2>
+            <h2 class="nombre_persona"><?php echo $ResP["Nombre"];?></h2>
+            <h2 class="fechas_persona"><span><?php echo fecha($ResP["Nacimiento"]).'</span><span> a </span><span>'.fecha($ResP["Deceso"]);?></span></h2>
         </div>
         <div class="c50 flex">
             <img src="nido/personas/fotos/<?php echo $ResP["IdNombre"];?>.jpg" />	
@@ -123,6 +129,11 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
 
     <section class="mensajes">
         <h2 class="titulo">Mensajes</h2>
+        <div class="botmensaje">
+            <a href="https://persona.jardindekolibries.com/mensaje/?id=<?php echo $ResP["Id"];?>" target="_blank" class="tab-flotante">
+                <img src="images/escribir.png" />
+            </a>
+        </div>
         <?php
             $ResMensajes = mysqli_query($conn, "SELECT * FROM mensajes WHERE IdPersona = '".$ResP["Id"]."' ORDER BY Id ASC");
             while($RResM = mysqli_fetch_array($ResMensajes))
@@ -175,18 +186,33 @@ QRcode::png($texto, $filename, $errorCorrectionLevel, $matrixPointSize, 2, $colo
         </div>
     </section>-->
 
+    <?php
+        $ResVM = mysqli_query($conn, "SELECT * FROM videomemorial WHERE IdPersona = '".$ResP["Id"]."' LIMIT 1");
+        if(mysqli_num_rows($ResVM) > 0)
+        {
+    ?>
     <section class="memorial">
+        <?php
+            if(mysqli_num_rows($ResVM) > 0)
+            {
+        ?>
         <div onclick="memorial('<?php echo $ResP["Id"];?>');">
             <img loading="lazy" decoding="async" width="150" height="150" src="https://jardindekolibries.com/wp-content/uploads/2021/09/icono-jardines-memo3-blanco-150x150.png" />
             <h2>VIDEO MEMORIAL</h2>
             <hr>
         </div>
+        <?php
+            }
+        ?>
         <div>
             <img loading="lazy" decoding="async" width="150" height="150" src="https://jardindekolibries.com/wp-content/uploads/2021/09/icono-jardines-arb-gen2-150x150.png" />
             <h2>ARBÓL MEMORIAL</h2>
             <hr>
         </div>
     </section>
+    <?php
+        }
+    ?>
 
     <footer>
         <div>
@@ -245,25 +271,98 @@ function memorial(idpersona){
 //detecta la orientación del video
 document.addEventListener('DOMContentLoaded', function() {
   const video = document.getElementById('mivideo');
+  const remembranza = document.getElementById('remembranza');
 
   video.addEventListener('loadedmetadata', function() {
     const { videoWidth, videoHeight } = video;
+    const isMobile = window.innerWidth <= 760;
 
-    if (videoHeight > videoWidth) {
-      // Es video vertical
-      video.style.objectFit = 'contain';  // se ajusta completo
-      video.style.height = '100vh';       // altura total de la pantalla
+    // 🔧 Resetear estilos antes de aplicar nuevos
+    video.style.width = '';
+    video.style.height = '';
+    video.style.objectFit = '';
+    remembranza.style.objectFit = '';
+
+    if (isMobile) {
+      if (videoHeight > videoWidth) {
+        // 📱 Vertical → alto completo
+        video.style.width = 'auto';
+        video.style.height = '100vh';
+        remembranza.style.height = '100vh';
+        video.style.objectFit = 'contain';
+      } else {
+        // 📱 Horizontal → ocupa toda la pantalla
+        video.style.width = '100%';
+        video.style.height = 'auto';
+        remembranza.style.height = 'auto';
+        video.style.objectFit = 'cover';
+      }
     } else {
-      // Es video horizontal
-      video.style.objectFit = 'cover';
-      video.style.height = 'auto';
+      if (videoHeight > videoWidth) {
+        // 💻 Vertical en escritorio
+        video.style.objectFit = 'contain';
+        video.style.height = '100vh';
+        remembranza.style.height = '100vh';
+        video.style.width = 'auto';
+      } else {
+        // 💻 Horizontal en escritorio
+        video.style.objectFit = 'cover';
+        video.style.width = '100%';
+        remembranza.style.width = '100%';
+        video.style.height = 'auto';
+      }
     }
   });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const mensajesSection = document.querySelector('.mensajes');
+  const tabFlotante = document.querySelector('.tab-flotante');
+  
+  if (!mensajesSection || !tabFlotante) return;
+
+  let ticking = false;
+  
+  function updateTabPosition() {
+    const sectionRect = mensajesSection.getBoundingClientRect();
+    const sectionTop = sectionRect.top;
+    const sectionBottom = sectionRect.bottom;
+    const offset = 20; // Distancia desde el top
+    const tabHeight = tabFlotante.offsetHeight;
+    
+    if (sectionTop <= offset && sectionBottom > (offset + tabHeight)) {
+      // Fijar al top del viewport
+      tabFlotante.classList.add('fixed');
+      tabFlotante.classList.remove('bottom');
+    } else if (sectionBottom <= (offset + tabHeight)) {
+      // Fijar al final de la sección
+      tabFlotante.classList.remove('fixed');
+      tabFlotante.classList.add('bottom');
+    } else {
+      // Posición inicial dentro de la sección
+      tabFlotante.classList.remove('fixed');
+      tabFlotante.classList.remove('bottom');
+    }
+    
+    ticking = false;
+  }
+  
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateTabPosition);
+      ticking = true;
+    }
+  });
+  
+  // Ejecutar una vez al cargar
+  updateTabPosition();
 });
 </script>
 <?php
 function fecha($fecha)
 {
+    $mes='';
+
 	switch($fecha[5].$fecha[6])
 	{
 		case '01'; $mes='Enero'; break;

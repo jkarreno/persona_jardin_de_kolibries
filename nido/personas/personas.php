@@ -90,7 +90,7 @@ if(isset($_POST["hacer"]))
     }
     if($_POST["hacer"]=='editarpersona')
     {
-        $nombrepersona=normalizar_nombre($_POST["nombre"]);
+        //$nombrepersona=normalizar_nombre($_POST["nombre"]);
 
         //carga el archivo foto
         if($_FILES['fotopersona']['name']!='')
@@ -158,7 +158,6 @@ if(isset($_POST["hacer"]))
             $autor2       = mysqli_real_escape_string($conn, $_POST["autor2"]);
 
             mysqli_query($conn, "UPDATE personas SET Nombre='".$nombre."', 
-                                                    IdNombre='".$nombrepersona."', 
                                                     Sexo='".$_POST["sexo"]."', 
                                                     Nacimiento='".$_POST["annon"]."', 
                                                     Deceso='".$_POST["annod"]."', 
